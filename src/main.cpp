@@ -1,15 +1,24 @@
-#include <miral/runner.h>
-#include <miral/minimal_window_manager.h>
-#include <miral/set_window_management_policy.h>
+/*
+ * Copyright © Canonical Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * under the terms of the GNU General Public License version 2 or 3 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-using namespace miral;
+#include <windowmanager/windowmanager.h>
 
 int main(int argc, char const* argv[])
 {
-    MirRunner runner{argc, argv};
+    auto novaWM = new WindowManager(argc, argv);
 
-    return runner.run_with(
-        {
-            set_window_management_policy<MinimalWindowManager>()
-        });
+    return 0;
 }
