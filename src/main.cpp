@@ -16,11 +16,22 @@
 
 #include <windowmanager/windowmanager.h>
 #include <UI/uiwindow.h>
+#include <UI/webserver.h>
 
-int main(int argc, char const* argv[])
-{
-    //auto novaWM = new WindowManager(argc, argv);
+#include <iostream>
+
+int main(int argc, char const* argv[]) {
+	auto webServer = new WebServer();
+    auto windowManager = new WindowManager(argc, argv);
+
+	using namespace std::chrono_literals;
+
+	std::this_thread::sleep_for(500ms);
+
 	auto uiWindow = new UIWindow();
 
+	delete uiWindow;
+	delete windowManager;
+	delete webServer;
     return 0;
 }

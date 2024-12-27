@@ -13,6 +13,7 @@ pkg_check_modules(XKBCOMMON xkbcommon REQUIRED)
 
 # Find WebView
 find_package(WebView)
+find_package(seasocks)
 
 # Set Project source files
 set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src)
@@ -25,15 +26,16 @@ set(PROJECT_SRC_FILES ${MAIN_SRC_FILES} ${WM_SRC_FILES} ${UI_SRC_FILES})
 add_executable(${PROJECT_NAME} ${PROJECT_SRC_FILES})
 
 target_include_directories(
-  ${PROJECT_NAME}
-  PUBLIC SYSTEM ${MIRAL_INCLUDE_DIRS}
-  ${PROJECT_INCLUDE_DIR}
+        ${PROJECT_NAME}
+        PUBLIC SYSTEM ${MIRAL_INCLUDE_DIRS}
+        ${PROJECT_INCLUDE_DIR}
 )
 
 target_link_libraries(
-  ${PROJECT_NAME}
-  ${MIRAL_LDFLAGS}
-  ${XKBCOMMON_LIBRARIES}
-  PkgConfig::WAYLAND_CLIENT
-  webview::core
+        ${PROJECT_NAME}
+        ${MIRAL_LDFLAGS}
+        ${XKBCOMMON_LIBRARIES}
+        PkgConfig::WAYLAND_CLIENT
+        webview::core
+        seasocks
 )

@@ -6,6 +6,8 @@
 
 #include <linux/input.h>
 
+#include <iostream>
+
 namespace ms = mir::scene;
 using namespace miral;
 using namespace miral::toolkit;
