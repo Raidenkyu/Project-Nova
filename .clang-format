@@ -1,6 +1,9 @@
 BasedOnStyle: Google
-IndentWidth: 2
-ColumnLimit: 0
+UseTab: Always
+IndentWidth: 4
+TabWidth: 4
+ColumnLimit: 80
 IncludeBlocks: Preserve
 NamespaceIndentation: All
 FixNamespaceComments: false
+PointerAlignment: Left

@@ -15,10 +15,12 @@
  */
 
 #include <windowmanager/windowmanager.h>
+#include <UI/uiwindow.h>
 
 int main(int argc, char const* argv[])
 {
-    auto novaWM = new WindowManager(argc, argv);
+    //auto novaWM = new WindowManager(argc, argv);
+	auto uiWindow = new UIWindow();
 
     return 0;
 }

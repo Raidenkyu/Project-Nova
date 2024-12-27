@@ -113,6 +113,7 @@ auto NovaWMPolicy::place_new_window(ApplicationInfo const& app_info, WindowSpeci
         specification.state() = mir_window_state_maximized;
         specification.top_left() = mir::optional_value<Point>{}; // Ignore requested position (if any) when we maximize
         specification.size() = mir::optional_value<Size>{}; // Ignore requested size (if any) when we maximize
+        specification.server_side_decorated() = false;
         tools.place_and_size_for_state(specification, WindowInfo{});
 
         if (!request.state().is_set() || request.state().value() != mir_window_state_restored)

@@ -20,6 +20,6 @@ void WindowManager::RunThreadFunc() {
         display_config.layout_option(),
         miral::set_window_management_policy<NovaWMPolicy>(),
         miral::Keymap{},
-        wayland_extensions
+        wayland_extensions,
     });
 }
