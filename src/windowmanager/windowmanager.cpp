@@ -1,23 +1,22 @@
 #include <windowmanager/windowmanager.h>
 
+#include <miral/display_configuration_option.h>
 #include <miral/keymap.h>
 #include <miral/set_window_management_policy.h>
-#include <miral/command_line_option.h>
+#include <miral/x11_support.h>
 
 #include "windowmanager/novawmpolicy.h"
 
-#include <iostream>
-
-WindowManager::WindowManager(int argc, char const* argv[]) : runner(argc, argv), display_config(runner) {
-    for (auto const& extension : {"zwp_pointer_constraints_v1", "zwp_relative_pointer_manager_v1"}) {
+WindowManager::WindowManager(int argc, char const* argv[]) : runner(argc, argv) {
+    for (auto const& extension : wayland_extensions.all_supported()) {
         wayland_extensions.enable(extension);
     }
 
-    this->StartRunnerThead();
+	this->runner.add_stop_callback([this]() { this->ShutdownCallback(); });
+	this->runner.add_start_callback([this]() { this->StartUpCallback(); });
 }
 
 WindowManager::~WindowManager() {
-	std::cout << "[HERE] Window is being Destroyed" << std::endl;
 	this->runner.stop();
 
 	if (this->wmThread.joinable()) {
@@ -25,14 +24,34 @@ WindowManager::~WindowManager() {
 	}
 }
 
-void WindowManager::StartRunnerThead() {
+void WindowManager::StartRunnerThread() {
 	this->wmThread = std::thread([this]() {
+		pthread_setname_np(pthread_self(), "WindowManager");
+
 		this->runner.run_with({
-			display_config,
-			display_config.layout_option(),
+			miral::display_configuration_options,
+			miral::X11Support{},
+			wayland_extensions,
 			miral::set_window_management_policy<NovaWMPolicy>(),
 			miral::Keymap{},
-			wayland_extensions,
 		});
 	});
+}
+
+void WindowManager::StartUpCallback() const {
+	const auto& wayland_display = this->runner.wayland_display();
+
+	// Prepare Environment before starting any window
+	setenv("WAYLAND_DISPLAY", wayland_display.value().c_str(),  true);   // configure Wayland socket
+	setenv("GDK_BACKEND", "wayland", true);             // configure GTK to use Wayland
+	setenv("QT_QPA_PLATFORM", "wayland", true);         // configure Qt to use Wayland
+	unsetenv("QT_QPA_PLATFORMTHEME");                   // Discourage Qt from unsupported theme
+	setenv("SDL_VIDEODRIVER", "wayland", true);         // configure SDL to use Wayland
+
+	// Notify all windows that the environment is ready
+	this->startupSignal();
+}
+
+void WindowManager::ShutdownCallback() {
+	this->shutdownSignal();
 }

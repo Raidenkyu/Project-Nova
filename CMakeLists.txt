@@ -14,6 +14,7 @@ pkg_check_modules(XKBCOMMON xkbcommon REQUIRED)
 # Find WebView
 find_package(WebView)
 find_package(seasocks)
+find_package(eventpp)
 
 # Set Project source files
 set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src)
@@ -38,4 +39,5 @@ target_link_libraries(
         PkgConfig::WAYLAND_CLIENT
         webview::core
         seasocks
+        eventpp
 )

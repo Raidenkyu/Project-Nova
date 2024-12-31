@@ -6,8 +6,6 @@
 
 #include <linux/input.h>
 
-#include <iostream>
-
 namespace ms = mir::scene;
 using namespace miral;
 using namespace miral::toolkit;
@@ -47,14 +45,12 @@ bool NovaWMPolicy::handle_keyboard_event(MirKeyboardEvent const* event)
 
         return true;
     }
-    else if (action == mir_keyboard_action_down && scan_code == KEY_F4)
+    else if (action == mir_keyboard_action_down && scan_code == KEY_Q)
     {
-        switch (modifiers & modifier_mask)
-        {
+        switch (modifiers & modifier_mask) {
         case mir_input_event_modifier_alt:
-            tools.ask_client_to_close(tools.active_window());;
-            return true;
-
+			tools.ask_client_to_close(tools.active_window());
+			return true;
         default:
             break;
         }

@@ -11,9 +11,8 @@ public:
 	WebServer();
 	~WebServer();
 
-private:
 	void StartRunnerThread();
-
+private:
 	std::shared_ptr<seasocks::PrintfLogger> serverLogger;
 	seasocks::Server serverInstance;
 	std::thread serverThread;
