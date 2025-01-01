@@ -4,9 +4,10 @@
 
 #include <miral/runner.h>
 #include <miral/wayland_extensions.h>
-#include <miral/display_configuration.h>
+#include <miral/toolkit_event.h>
 
 #include "eventpp/callbacklist.h"
+
 
 class WindowManager {
 public:
@@ -21,6 +22,7 @@ public:
 private:
     void StartUpCallback() const;
     void ShutdownCallback();
+    bool InputCallback(MirEvent const* event);
 
     // Window Management objects
     miral::MirRunner runner;

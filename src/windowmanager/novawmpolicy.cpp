@@ -21,39 +21,20 @@ bool NovaWMPolicy::handle_keyboard_event(MirKeyboardEvent const* event)
     auto const scan_code = mir_keyboard_event_scan_code(event);
     auto const modifiers = mir_keyboard_event_modifiers(event) & modifier_mask;
 
-    if (action == mir_keyboard_action_down &&
-            modifiers == mir_input_event_modifier_alt &&
-            scan_code == KEY_TAB)
-    {
+	auto const altModifiderActive =
+		action == mir_keyboard_action_down &&
+		modifiers == mir_input_event_modifier_alt;
+
+    if (altModifiderActive && scan_code == KEY_TAB) {
         tools.focus_next_application();
 
         return true;
     }
-    else if (action == mir_keyboard_action_down &&
-            modifiers == mir_input_event_modifier_alt &&
-            scan_code == KEY_GRAVE)
-    {
+
+	if (altModifiderActive && scan_code == KEY_GRAVE) {
         tools.focus_next_within_application();
 
         return true;
-    }
-    else if (action == mir_keyboard_action_down &&
-             modifiers == (mir_input_event_modifier_alt | mir_input_event_modifier_shift) &&
-             scan_code == KEY_GRAVE)
-    {
-        tools.focus_prev_within_application();
-
-        return true;
-    }
-    else if (action == mir_keyboard_action_down && scan_code == KEY_Q)
-    {
-        switch (modifiers & modifier_mask) {
-        case mir_input_event_modifier_alt:
-			tools.ask_client_to_close(tools.active_window());
-			return true;
-        default:
-            break;
-        }
     }
 
     return false;
