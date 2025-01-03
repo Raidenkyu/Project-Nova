@@ -7,6 +7,8 @@
 #include <miral/set_window_management_policy.h>
 #include <miral/x11_support.h>
 
+#include <iostream>
+
 #include "windowmanager/novawmpolicy.h"
 
 namespace mirtk = miral::toolkit;
@@ -26,6 +28,8 @@ WindowManager::~WindowManager() {
 	if (this->wmThread.joinable()) {
 		this->wmThread.join();
 	}
+
+	std::cout << "WindowManager destroyed\n";
 }
 
 void WindowManager::StartRunnerThread() {

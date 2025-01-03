@@ -12,6 +12,8 @@ UIWindow::~UIWindow() {
 	if (this->windowThread.joinable()) {
 		this->windowThread.join();
 	}
+
+	std::cout << "UIWindow destroyed\n";
 }
 
 void UIWindow::StartRunnerThread() {

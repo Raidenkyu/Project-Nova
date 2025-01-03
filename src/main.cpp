@@ -14,33 +14,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <windowmanager/windowmanager.h>
-#include <UI/uiwindow.h>
-#include <UI/webserver.h>
+#include <core/novacore.h>
 
 
 int main(int argc, char const* argv[]) {
-	bool isRunning = true;
-	auto webServer = new WebServer();
-    auto windowManager = new WindowManager(argc, argv);
-	auto uiWindow = new UIWindow();
+	auto novaCore = NovaCore(argc, argv);
 
-	windowManager->startupSignal.append([&]() {
-		uiWindow->StartRunnerThread();
-	});
-
-	windowManager->shutdownSignal.append([&]() {
-		isRunning = false;
-	});
-
-	webServer->StartRunnerThread();
-	windowManager->StartRunnerThread();
-
-	while (isRunning) { std::this_thread::sleep_for(std::chrono::milliseconds(16)); }
-
-	delete uiWindow;
-	delete windowManager;
-	delete webServer;
-
-    return 0;
+    return novaCore.RunProcess();
 }

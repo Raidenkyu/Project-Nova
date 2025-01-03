@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.27)
 
 project(nova-service)
 
@@ -21,8 +21,9 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src)
 
 file(GLOB WM_SRC_FILES ${PROJECT_SOURCE_DIR}/src/windowmanager/*.cpp)
 file(GLOB UI_SRC_FILES ${PROJECT_SOURCE_DIR}/src/UI/*.cpp)
+file(GLOB CORE_SRC_FILES ${PROJECT_SOURCE_DIR}/src/core/*.cpp)
 file(GLOB MAIN_SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
-set(PROJECT_SRC_FILES ${MAIN_SRC_FILES} ${WM_SRC_FILES} ${UI_SRC_FILES})
+set(PROJECT_SRC_FILES ${MAIN_SRC_FILES} ${WM_SRC_FILES} ${UI_SRC_FILES} ${CORE_SRC_FILES})
 
 add_executable(${PROJECT_NAME} ${PROJECT_SRC_FILES})
 

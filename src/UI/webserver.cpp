@@ -13,6 +13,8 @@ WebServer::~WebServer() {
 	if (this->serverThread.joinable()) {
 		this->serverThread.join();
 	}
+
+	std::cout << "WebServer destroyed\n";
 }
 
 void WebServer::StartRunnerThread() {
