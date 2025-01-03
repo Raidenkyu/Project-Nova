@@ -1,10 +1,10 @@
 #include "webserver.h"
 
 #include <logger/logger.h>
+#include "serverlogger.h"
 
 WebServer::WebServer() :
-	serverLogger(std::make_shared<seasocks::PrintfLogger>(seasocks::Logger::Level::Access)),
-	serverInstance(serverLogger) {
+	serverInstance(std::make_shared<ServerLogger>()) {
 }
 
 WebServer::~WebServer() {

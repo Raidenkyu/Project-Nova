@@ -8,6 +8,7 @@
 
 #include "eventpp/callbacklist.h"
 
+#include "compositorlogger.h"
 
 class WindowManager {
 public:
@@ -25,6 +26,7 @@ private:
     bool InputCallback(MirEvent const* event);
 
     // Window Management objects
+    std::shared_ptr<CompositorLogger> wmLogger;
     miral::MirRunner runner;
     miral::WaylandExtensions wayland_extensions;
 

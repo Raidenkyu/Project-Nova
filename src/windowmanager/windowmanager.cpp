@@ -2,19 +2,21 @@
 #include <logger/logger.h>
 #include <windowmanager/windowmanager.h>
 
+#include "mir/log.h"
+
 #include <miral/append_event_filter.h>
 #include <miral/display_configuration_option.h>
 #include <miral/keymap.h>
 #include <miral/set_window_management_policy.h>
 #include <miral/x11_support.h>
 
-#include <iostream>
-
 #include "windowmanager/novawmpolicy.h"
 
 namespace mirtk = miral::toolkit;
 
-WindowManager::WindowManager(int argc, char const* argv[]) : runner(argc, argv) {
+WindowManager::WindowManager(int argc, char const* argv[]) :
+	wmLogger(std::make_shared<CompositorLogger>()),
+	runner(argc, argv) {
     for (auto const& extension : wayland_extensions.all_supported()) {
         wayland_extensions.enable(extension);
     }
@@ -53,6 +55,9 @@ void WindowManager::StartRunnerThread() {
 }
 
 void WindowManager::StartUpCallback() const {
+	// TODO: Find better way to assign logger
+	mir::logging::set_logger(this->wmLogger);
+
 	const auto& wayland_display = this->runner.wayland_display();
 
 	// Prepare Environment before starting any window
