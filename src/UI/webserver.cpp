@@ -1,6 +1,6 @@
 #include "webserver.h"
 
-
+#include <logger/logger.h>
 
 WebServer::WebServer() :
 	serverLogger(std::make_shared<seasocks::PrintfLogger>(seasocks::Logger::Level::Access)),
@@ -14,7 +14,7 @@ WebServer::~WebServer() {
 		this->serverThread.join();
 	}
 
-	std::cout << "WebServer destroyed\n";
+	LogInfo("WebServer destroyed");
 }
 
 void WebServer::StartRunnerThread() {

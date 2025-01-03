@@ -15,6 +15,7 @@ pkg_check_modules(XKBCOMMON xkbcommon REQUIRED)
 find_package(WebView)
 find_package(seasocks)
 find_package(eventpp)
+find_package(spdlog)
 
 # Set Project source files
 set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src)
@@ -22,8 +23,9 @@ set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src)
 file(GLOB WM_SRC_FILES ${PROJECT_SOURCE_DIR}/src/windowmanager/*.cpp)
 file(GLOB UI_SRC_FILES ${PROJECT_SOURCE_DIR}/src/UI/*.cpp)
 file(GLOB CORE_SRC_FILES ${PROJECT_SOURCE_DIR}/src/core/*.cpp)
+file(GLOB LOG_SRC_FILES ${PROJECT_SOURCE_DIR}/src/logger/*.cpp)
 file(GLOB MAIN_SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
-set(PROJECT_SRC_FILES ${MAIN_SRC_FILES} ${WM_SRC_FILES} ${UI_SRC_FILES} ${CORE_SRC_FILES})
+set(PROJECT_SRC_FILES ${MAIN_SRC_FILES} ${WM_SRC_FILES} ${UI_SRC_FILES} ${CORE_SRC_FILES} ${LOG_SRC_FILES})
 
 add_executable(${PROJECT_NAME} ${PROJECT_SRC_FILES})
 
@@ -41,4 +43,5 @@ target_link_libraries(
         webview::core
         seasocks
         eventpp
+        spdlog::spdlog
 )

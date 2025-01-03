@@ -1,8 +1,9 @@
 #include "uiwindow.h"
 
-#include <iostream>
-#include <fstream>
+#include <logger/logger.h>
 
+#include <fstream>
+#include <iostream>
 
 UIWindow::UIWindow() {}
 
@@ -13,7 +14,7 @@ UIWindow::~UIWindow() {
 		this->windowThread.join();
 	}
 
-	std::cout << "UIWindow destroyed\n";
+	LogInfo("UIWindow destroyed");
 }
 
 void UIWindow::StartRunnerThread() {

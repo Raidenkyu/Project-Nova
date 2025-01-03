@@ -1,7 +1,10 @@
 #include "novacore.h"
 
+#include <logger/logger.h>
+
 NovaCore::NovaCore(int argc, char const* argv[]) :
-	isRunning(false),
+	logger(new Logger()),
+	isRunning(true),
 	webServer(new WebServer()),
 	windowManager(new WindowManager(argc, argv)),
 	uiWindow(new UIWindow()) {
@@ -17,8 +20,6 @@ NovaCore::NovaCore(int argc, char const* argv[]) :
 }
 
 int NovaCore::RunProcess() {
-	this->isRunning = true;
-
 	this->webServer->StartRunnerThread();
 	this->windowManager->StartRunnerThread();
 

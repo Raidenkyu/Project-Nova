@@ -1,4 +1,5 @@
 #include <linux/input-event-codes.h>
+#include <logger/logger.h>
 #include <windowmanager/windowmanager.h>
 
 #include <miral/append_event_filter.h>
@@ -29,7 +30,7 @@ WindowManager::~WindowManager() {
 		this->wmThread.join();
 	}
 
-	std::cout << "WindowManager destroyed\n";
+	LogInfo("WindowManager destroyed");
 }
 
 void WindowManager::StartRunnerThread() {
