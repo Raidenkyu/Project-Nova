@@ -11,21 +11,15 @@ pkg_check_modules(WAYLAND_CLIENT REQUIRED IMPORTED_TARGET wayland-client)
 pkg_check_modules(MIRAL miral REQUIRED)
 pkg_check_modules(XKBCOMMON xkbcommon REQUIRED)
 
-# Find WebView
-find_package(WebView)
-find_package(seasocks)
+# Find Dependencies
+find_package(cpp-ipc)
 find_package(eventpp)
+find_package(seasocks)
 find_package(spdlog)
+find_package(WebView)
 
-# Set Project source files
-set(PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src)
-
-file(GLOB WM_SRC_FILES ${PROJECT_SOURCE_DIR}/src/windowmanager/*.cpp)
-file(GLOB UI_SRC_FILES ${PROJECT_SOURCE_DIR}/src/UI/*.cpp)
-file(GLOB CORE_SRC_FILES ${PROJECT_SOURCE_DIR}/src/core/*.cpp)
-file(GLOB LOG_SRC_FILES ${PROJECT_SOURCE_DIR}/src/logger/*.cpp)
-file(GLOB MAIN_SRC_FILES ${PROJECT_SOURCE_DIR}/src/*.cpp)
-set(PROJECT_SRC_FILES ${MAIN_SRC_FILES} ${WM_SRC_FILES} ${UI_SRC_FILES} ${CORE_SRC_FILES} ${LOG_SRC_FILES})
+# Add sources directory, supplying both PROJECT_SRC_FILES and PROJECT_INCLUDE_DIR
+add_subdirectory("${CMAKE_SOURCE_DIR}/src/")
 
 add_executable(${PROJECT_NAME} ${PROJECT_SRC_FILES})
 
@@ -44,4 +38,5 @@ target_link_libraries(
         seasocks
         eventpp
         spdlog::spdlog
+        ipc
 )

@@ -3,8 +3,9 @@
 #include <logger/logger.h>
 
 NovaCore::NovaCore(int argc, char const* argv[]) :
-	logger(new Logger()),
 	isRunning(true),
+	logger(new Logger()),
+	service(new NovaService()),
 	webServer(new WebServer()),
 	windowManager(new WindowManager(argc, argv)),
 	uiWindow(new UIWindow()) {
@@ -24,6 +25,7 @@ int NovaCore::RunProcess() {
 	this->windowManager->StartRunnerThread();
 
 	while (this->isRunning) {
+		this->service->Process();
 		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 	}
 
