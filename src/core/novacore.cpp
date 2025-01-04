@@ -26,7 +26,6 @@ int NovaCore::RunProcess() {
 
 	while (this->isRunning) {
 		this->service->Process();
-		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 	}
 
 	return 0;

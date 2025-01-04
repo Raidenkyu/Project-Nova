@@ -7,7 +7,7 @@
 NovaService::NovaService() : requestsChannel("api", ipc::sender | ipc::receiver) {}
 
 void NovaService::Process() {
-	auto request = requestsChannel.recv();
+	auto request = requestsChannel.recv(ipc::default_timeout);
 
 	if (!request.empty()) {
 		auto* requestBuffer = request.get<Request*>();
